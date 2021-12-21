@@ -5,8 +5,9 @@ using UnityEngine;
 public class EyeRaycast : MonoBehaviour
 {
     [SerializeField] private float _rayLength = 50f;
-   
     private Transform _cameraTransform;
+    
+    [SerializeField] private Reticle _reticle;
     
     
     //TODO Add Gaze & Events
@@ -32,10 +33,15 @@ public class EyeRaycast : MonoBehaviour
         Debug.DrawRay(_cameraTransform.position, fwd * _rayLength, Color.green);
 
         RaycastHit hit;
-        // Perform the Raycast forwards to see if we hit an itneractive item
+        // Perform the Raycast forwards to see if we hit an interactive item
         if (Physics.Raycast(ray, out hit, _rayLength) && hit.collider != null)
         {
             Debug.Log("Hit: " + hit.point);
+            _reticle.SetPosition(hit);
+        }
+        else
+        {
+            _reticle.SetPosition();
         }
     }
 

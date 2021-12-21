@@ -1,45 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldManagement : MonoBehaviour
 {
-    [SerializeField] private int _playerHealth;
-    
+    [SerializeField] private int _cubes = 8;
+    [SerializeField] private float _distance = 1.5F;
     public GameObject Cube;
 
-    public int PlayerHealth
-    {
-        get => _playerHealth;
-        set
-        {
-            if (value >= 0 && value <= 100)
-            {
-                _playerHealth = value;
-            }
-        }
-    }
-    
-    // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(HelloWorld());
-        Instantiate(Cube);
-        PlayerHealth = -20;
-        var x = PlayerHealth;
+        StartCoroutine(createCubes());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator createCubes()
     {
-        
-    }
+        GameObject lastCube = Cube;
+        for (int x = 0; x < _cubes; ++x)
+        {
+            yield return new WaitForSeconds(lastCube.GetComponent<Fader>().fadeDuration + 0.5f);
+            GameObject newCube = Instantiate(lastCube, new Vector3(lastCube.transform.position.x + _distance, 0, 0),
+                Quaternion.identity);
+            Debug.Log("Created");
+            lastCube = newCube;
+        }
 
-    private IEnumerator HelloWorld()
-    {
-        Debug.Log("In Hello World");
-        yield return new WaitForSeconds(2.0F);
-        Debug.Log("Still here!");
-        yield break;
+        yield return null;
     }
 }
