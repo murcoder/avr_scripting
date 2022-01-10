@@ -9,7 +9,7 @@ public class WorldManagement : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(createCubes());
+        //StartCoroutine(createCubes());
     }
 
     private IEnumerator createCubes()
