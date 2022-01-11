@@ -38,14 +38,25 @@ adds the logic for the cube creation.
 ▪ When gazed on, store its color. Replace it with highlight color.
 ▪ Restore original color on GazeOut.
 
-### Solution
-Added a Fader script with a variable duation to the cube. The script _WorldManagement.cs_ in the EventSystem,
-adds the logic for the cube creation.
-
 ### Sources
 * [Unity + C# - Events and Delegates Explained](https://www.youtube.com/watch?v=ihIOVj9t0_E&ab_channel=UnityChat)
 * [C# Events](https://docs.microsoft.com/en-us/dotnet/csharp/events-overview)
 * [VR Dev](https://www.coursera.org/learn/mobile-vr-app-development-unity/)
+
+
+## Exercise Part 3: Reticle / Cursor
+![screenshot](Assets/Screenshots/exercise3.jpg)
+
+### Aim
+▪ Using canvas, dynamic positioning of items in scene according to gaze
+
+### Goal
+* Add a reticle to your scene
+  * Rotate it according to the hit surface normal
+  * Scale with distance from camera
+  * Use default distance if no hit
+* Position reticle in Update() / PerformEyeRaycast() in EyeRaycast.cs
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

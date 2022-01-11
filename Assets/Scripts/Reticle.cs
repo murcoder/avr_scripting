@@ -5,10 +5,11 @@ using UnityEngine;
 public class Reticle : MonoBehaviour
 {
     [SerializeField] private float _defaultDistance = 5.0f;
+    
+    [Tooltip("The distance from the hit surface to place the reticle")]
     [SerializeField] private float _surfaceReticleDistance = 0.02f;
     [SerializeField] private Transform _reticleTransform;
     [SerializeField] private Transform _cameraTransform;
-    [SerializeField] private Reticle _reticle;
 
     // Store the original scale of the reticle.
     private Vector3 _originalScale;
@@ -18,9 +19,17 @@ public class Reticle : MonoBehaviour
 
     private void Start()
     {
-        // Store the original scale and rotation.
-        _originalScale = _reticleTransform.localScale;
-        _originalRotation = _reticleTransform.localRotation;
+        if (!_cameraTransform)
+        {
+            _cameraTransform = GetComponent<Camera>().transform;
+        }
+
+        if (_reticleTransform)
+        {
+            // Store the original scale and rotation.
+            _originalScale = _reticleTransform.localScale; 
+            _originalRotation = _reticleTransform.localRotation;
+        }
     }
 
     // Update is called once per frame
@@ -32,6 +41,7 @@ public class Reticle : MonoBehaviour
     // it at default distance from the camera, based on original rotation.
     public void SetPosition()
     {
+        if (!_reticleTransform) return;
         // Set the position of the reticle to the default distance in front of the camera
         _reticleTransform.position = _cameraTransform.position
                                      + _cameraTransform.forward * _defaultDistance;
@@ -48,7 +58,7 @@ public class Reticle : MonoBehaviour
     public void SetPosition(RaycastHit hit)
     {
         if (!_reticleTransform) return;
-        
+
         // Set the position to the hit point plus a small offset to avoid clipping
         _reticleTransform.position = hit.point
                                      + hit.normal * _surfaceReticleDistance;
